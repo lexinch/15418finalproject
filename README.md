@@ -2,7 +2,7 @@
 *Team Members: Melody Cheng, Teresa Wan*
 
 ## URL
-[Project Webpage URL](https://lexinch.github.io/15418finalproject/)
+[Project Proposal URL](https://lexinch.github.io/15418finalproject/proposal)
 
 ## Summary
 We will parallelize the sequential algorithm for maximal independent set (MIS), implementing the algorithm of Luby’s algorithm and Blelloch’s algorithm. We will evaluate the speedup performance and profile our parallel implementation.
