@@ -19,7 +19,7 @@ Parallelism particularly benefits areas requiring rapid processing of large, com
 
 Pseudocode for sequential algorithm to solve MIS:
 ```
-procedure MIS(G):
+function MIS(G):
     Initialize an empty set M
     For each vertex v in G:
         If v is not adjacent to any vertex in M:
@@ -28,7 +28,7 @@ procedure MIS(G):
 ```
 Pseudocode for parallel Luby’s algorithm to solve MIS:
 ```
-procedure LubyMIS(G):
+function LubyMIS(G):
     Initialize MIS as an empty set
     Initialize Candidates as all vertices of G
     While Candidates is not empty:
@@ -42,7 +42,7 @@ procedure LubyMIS(G):
 ```
 Pseudocode for parallel Blelloch’s algorithm to solve MIS:
 ```
-procedure BlellochMIS(G):
+function BlellochMIS(G):
     Initialize MIS as an empty set
     Initialize Candidates as all vertices of G
     Initialize Status of each vertex as 'candidate'
@@ -61,13 +61,15 @@ procedure BlellochMIS(G):
 
 
 ## The Challenge
-Explain why your project is challenging, particularly in terms of parallelization. Detail the workload characteristics and any system constraints.
-Luby's Algorithm: A core part of Luby's algorithm is for each node to check its neighbors' states (whether they have also chosen to be in the MIS). This step requires efficient synchronization mechanisms to prevent race conditions and ensure that each node has the most up-to-date information about its neighbors.
-Blelloch's Algorithm: The graph coloring step requires careful consideration to avoid conflicts and ensure that no two adjacent vertices are assigned the same color in parallel.
+- Luby's Algorithm: A core part of Luby's algorithm is for each node to check its neighbors' states (whether they have also chosen to be in the MIS). This step requires efficient synchronization mechanisms to prevent race conditions and ensure that each node has the most up-to-date information about its neighbors.
+
+- Blelloch's Algorithm: The graph coloring step requires careful consideration to avoid conflicts and ensure that no two adjacent vertices are assigned the same number in parallel.
 The choice of graph representation (e.g., adjacency lists, adjacency matrices, compressed sparse row format) can significantly impact the performance of the algorithm. The representation must be conducive to parallel access and modifications.
-Workload characteristics:
-Dynamic changes in workload: As the algorithm progresses, the workload associated with each node can change. For example, once a node is included in the MIS, it affects the status of its neighbors, dynamically altering the computation required for those parts of the graph.
-In graph algorithms, the workload is often unevenly distributed across the processors due to the nature of the graph. Processors handling denser parts of the graph might become hotspots, while others remain idle.
+
+- Workload characteristics:
+
+    - Dynamic changes in workload: As the algorithm progresses, the workload associated with each node can change. For example, once a node is included in the MIS, it affects the status of its neighbors, dynamically altering the computation required for those parts of the graph.
+    - In graph algorithms, the workload is often unevenly distributed across the processors due to the nature of the graph. Processors handling denser parts of the graph might become hotspots, while others remain idle.
 
 
 ## Resources
@@ -96,8 +98,7 @@ For our project, the following resources will be utilized:
 - Experiment with hybrid parallel computing models that combine the strength of different parallelization techniques
 
 ## Platform Choice
-Explain why your chosen platform (hardware and software) is suitable for your project.
-For this project, we have selected multi-core GHC and PSC machines as our primary hardware platforms. These machines are chosen for their robust multi-core architecture, which is ideally suited for parallel computation tasks.
+For this project, we have selected multi-core GHC and PSC machines as our primary hardware platforms. These machines are chosen for their robust multi-core architecture, which is suited for parallel computation tasks.
 
 Regarding the software, we will be utilizing C++ as the programming language. Our team's prior experience with C++, gained through earlier assignments, makes it a practical choice. Additionally, we plan to integrate OpenMP and OpenMPI libraries for parallel programming. These libraries are well-suited for implementing parallelization. Furthermore, we plan on exploring the possibility of the use of SIMD and CUDA kernels within C++. The inclusion of SIMD and CUDA is aimed at enhancing the performance of our algorithms on modern hardware, exploiting data-level parallelism and GPU computing capabilities. 
 
@@ -106,9 +107,9 @@ Regarding the software, we will be utilizing C++ as the programming language. Ou
 
 | Week         | To-Do                                                        |
 |--------------|--------------------------------------------------------------|
-| **Week 1:**<br>November 13 - November 19 |- Initial research<br>- Write Project Proposal<br>- Plan out necessary code portions<br>- Start implementation of sequential version           |
+| **Week 1:**<br>November 13 - November 19 |- Initial research<br>- Write Project Proposal (due November 15th)<br>- Plan out necessary code portions<br>- Start implementation of sequential version           |
 | **Week 2:**<br>November 20 - November 26 | - Write code for time measurement and test cases<br>- Implement parallelized Luby’s algorithm using OpenMP                |
-| **Week 3:**<br>November 27 - December 3  | - Implement parallelized Luby’s algorithm using OpenMPI and parallelized Blelloch’s algorithm<br>- Write Project Milestone Report<br>(due December 3rd) |
+| **Week 3:**<br>November 27 - December 3  | - Implement parallelized Luby’s algorithm using OpenMPI and parallelized Blelloch’s algorithm<br>- Write Project Milestone Report(due December 3rd) |
 | **Week 4:**<br>December 4 - December 10  | - Do more focused performance measurement and tuning<br>- Finalize OpenMP and OpenMPI parallel implementations |
 | **Week 5:**<br>December 11 - December 15 | - Write Final Project Report (due December 14th)<br>- Prepare for Project Poster Session (December 15th) |
 
