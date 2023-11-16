@@ -1,6 +1,4 @@
-# 15418finalproject
-
-# Parallel Maximal Independent Set
+# 15418 Final Project: Parallel Maximal Independent Set
 *Team Members: Melody Cheng, Teresa Wan*
 
 ## URL
@@ -108,7 +106,7 @@ Regarding the software, we will be utilizing C++ as the programming language. Ou
 |--------------|--------------------------------------------------------------|
 | **Week 1:**<br>November 13 - November 19 |- Initial research<br>- Write Project Proposal (due November 15th)<br>- Plan out necessary code portions<br>- Start implementation of sequential version           |
 | **Week 2:**<br>November 20 - November 26 | - Write code for time measurement and test cases<br>- Implement parallelized Luby’s algorithm using OpenMP                |
-| **Week 3:**<br>November 27 - December 3  | - Implement parallelized Luby’s algorithm using OpenMPI and parallelized Blelloch’s algorithm<br>- Write Project Milestone Report(due December 3rd) |
+| **Week 3:**<br>November 27 - December 3  | - Implement parallelized Luby’s algorithm using OpenMPI and parallelized Blelloch’s algorithm<br>- Write Project Milestone Report (due December 3rd) |
 | **Week 4:**<br>December 4 - December 10  | - Do more focused performance measurement and tuning<br>- Finalize OpenMP and OpenMPI parallel implementations |
 | **Week 5:**<br>December 11 - December 15 | - Write Final Project Report (due December 14th)<br>- Prepare for Project Poster Session (December 15th) |
 
