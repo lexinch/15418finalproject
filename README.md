@@ -4,13 +4,12 @@
 *Team Members: Melody Cheng, Teresa Wan*
 
 ## URL
-[Project Webpage URL](#)
+[Project Webpage URL](https://lexinch.github.io/15418finalproject/)
 
 ## Summary
 We will parallelize the sequential algorithm for maximal independent set (MIS), implementing the algorithm of Luby’s algorithm and Blelloch’s algorithm. We will evaluate the speedup performance and profile our parallel implementation.
 
 ## Background
-Describe your project's application area, focusing on aspects that might benefit from parallelism. Include any relevant diagrams or pseudocode.
 Our project aims to parallelize algorithms for solving the maximal independent set (MIS) problem in graphs. This problem, pivotal in various application areas like network theory, scheduling, and resource allocation, involves identifying the largest set of vertices with no two adjacent vertices.
 
 The MIS problem, inherently NP-hard, poses significant computational challenges, especially in large graphs. Here, parallelism offers a promising solution. By decomposing the problem and concurrently processing subproblems, we can potentially achieve substantial performance gains.
