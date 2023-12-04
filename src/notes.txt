@@ -5,17 +5,17 @@ Implementing Sequential Algo
         - Decided to go with option 1 for shorter runtime 
 - Decide that we need 2 G's, 1 for recording original graph structure, 1 for removing vertices during implementation
     - we will call buildGraph twice to create 2 G's at the beginning
-- testing did not work
+- testing works
     - need to compile seq_mis.cpp as well, not just main.cpp 
     - Testing commands (You can test locally with these as well):
-        - "g++ -std=c++14 -o main src/main.cpp src/seq_mis.cpp"
-        - "./main -seq (-f filename)"
+        - "g++ -std=c++14 -o main src/main.cpp src/seq_mis.cpp src/luby_mis.cpp"
+        - "./main -seq (-f filename)" run under src
             - "./main -seq"
-            - "./main -seq -f test/random-5000.txt"
-            - "./main -seq -f test/sparse-50000.txt"
+            - "./main -seq -f ../random-5000.txt"
+            - "./main -seq -f ../sparse-50000.txt"
 - generating test cases
     - use "python3 check.py" to generate test cases
-    - Test #3 cannot finish running
+    - Test #3 can finish running (takes too long)
 - pushing to Github
     - test files cannot be uploaded because they exceed size limit
     - could look into Git Large File Storage - https://git-lfs.github.com
@@ -23,4 +23,5 @@ Implementing Sequential Algo
         git filter-branch --force --index-filter 'for file in test/complete-5000.txt test/components-50000.txt test/random-50000.txt test/sparse-500000.txt; do git rm --cached --ignore-unmatch $file; done' --prune-empty --tag-name-filter cat -- --all
     - Follow previous command by
         git push origin --force --all
-
+- lubyopenmp
+    - need to fine tune

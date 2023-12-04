@@ -11,7 +11,7 @@
 
 
 // implementation versions
-enum class MISType {Sequential};
+enum class MISType { Sequential, LubyOpenMP};
 
 struct StartupOptions {
     std::string inputFile = "";
@@ -25,7 +25,9 @@ StartupOptions parseOptions(int argc, const char **argv) {
             so.inputFile = argv[i+1];
         } else if (strcmp(argv[i], "-seq") == 0) {
             so.type = MISType::Sequential;
-        } 
+        } else if (strcmp(argv[i], "-lubyopenmp") == 0) {
+            so.type = MISType::LubyOpenMP;
+        }
         // else if (strcmp(argv[i], "-openmp") == 0) {
         //     so.type = MISType::OpenMP;
         // } else if (strcmp(argv[i], "-jpop") == 0) {
@@ -132,6 +134,8 @@ int main(int argc, const char **argv) {
 
     std::vector<vertex> vertices;
     std::vector<std::pair<vertex, vertex>> edges;
+    std::cout << options.inputFile << std::endl;
+    readGraphFromFile(options.inputFile, vertices, edges);
     if (!readGraphFromFile(options.inputFile, vertices, edges)) { // if fail to read from file, arbitrarily create test 
         createCompleteTest(vertices, edges);
         std::cout << "Failed to read graph from input file\n";
@@ -142,6 +146,9 @@ int main(int argc, const char **argv) {
     switch (options.type) {
         case MISType::Sequential:
             g = createSeqGraph();
+            break;
+        case MISType::LubyOpenMP:
+            g = createLubyGraph();
             break;
         // case MISType::OpenMP:
         //     cg = createOpenMPColorGraph();
@@ -155,12 +162,12 @@ int main(int argc, const char **argv) {
 
     }
 
-    Timer t;
-
     std::unordered_map<vertex, std::vector<vertex>> orig_graph;
     std::unordered_map<vertex, std::vector<vertex>> temp_graph;
     std::unordered_set<vertex> indSet;
     g->buildGraph(vertices, edges, orig_graph);
+
+    Timer t;
     g->buildGraph(vertices, edges, temp_graph);
     t.reset();
     g->buildIndSet(temp_graph, indSet);
