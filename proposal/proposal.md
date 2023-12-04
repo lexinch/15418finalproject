@@ -28,7 +28,7 @@ Pseudocode for parallel Luby’s algorithm to solve MIS:
 function LubyMIS(G):
     Initialize I to an empty set.
     While V is not empty:
-        Choose a random set of vertices S ⊆ V, by selecting each vertex v independently with probability $$frac{1}{2d(v)}$$, where d is the degree of v (the number of neighbors of v).
+        Choose a random set of vertices S ⊆ V, by selecting each vertex v independently with probability 1/(2d(v)), where d is the degree of v (the number of neighbors of v).
         For every edge in E, if both its endpoints are in the random set S, then remove from S the endpoint whose degree is lower (i.e. has fewer neighbors). Break ties arbitrarily, e.g. using a lexicographic order on the vertex names.
         Add the set S to I.
         Remove from V the set S and all the neighbors of nodes in S.
