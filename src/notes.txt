@@ -5,3 +5,13 @@ Implementing Sequential Algo
         - Decided to go with option 1 for shorter runtime 
 - Decide that we need 2 G's, 1 for recording original graph structure, 1 for removing vertices during implementation
     - we will call buildGraph twice to create 2 G's at the beginning
+- testing did not work
+    - need to compile seq_mis.cpp as well, not just main.cpp 
+    - Testing commands (You can test locally with these as well):
+        - "g++ -std=c++14 -o main src/main.cpp src/seq_mis.cpp"
+        - "./main -seq (-f filename)"
+            - "./main -seq"
+            - "./main -seq -f test/random-5000.txt"
+            - "./main -seq -f test/sparse-50000.txt"
+- generating test cases
+    - Test #3 cannot finish running

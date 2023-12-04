@@ -170,9 +170,30 @@ int main(int argc, const char **argv) {
     std::cout.precision(5);
     std::cout << "Time spent: " << time_spent << std::endl;
 
+    // Print information about indSet
+    std::cout << "Size of Independent Set: " << indSet.size() << std::endl;
+
+    // Print a few elements from the set
+    std::cout << "Some elements from the Independent Set: ";
+    int count = 0;
+    const int maxElementsToShow = 10; // Change this number to show more or fewer elements
+    for (const auto& element : indSet) {
+        std::cout << element << " ";
+        if (++count >= maxElementsToShow) {
+            break;
+        }
+    }
+    if (indSet.size() > maxElementsToShow) {
+        std::cout << "... (and more)";
+    }
+    std::cout << std::endl;
+
     if (!checkCorrectness(vertices, orig_graph, indSet)) {
         std::cout << "Failed to find MIS correctly\n";
         return -1;
+    }
+    else {
+        std::cout << "Found MIS correctly\n";
     }
 
     return 0;
