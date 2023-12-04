@@ -1,0 +1,7 @@
+Implementing Sequential Algo
+- To remove v and neighbors from G
+    - Option 1: check if neighbor n for all neighbors in G
+    - Option 2: remove neighbor n from all adjacency lists containing it 
+        - Decided to go with option 1 for shorter runtime 
+- Decide that we need 2 G's, 1 for recording original graph structure, 1 for removing vertices during implementation
+    - we will call buildGraph twice to create 2 G's at the beginning
