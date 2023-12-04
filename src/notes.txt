@@ -19,3 +19,8 @@ Implementing Sequential Algo
 - pushing to Github
     - test files cannot be uploaded because they exceed size limit
     - could look into Git Large File Storage - https://git-lfs.github.com
+    - use command below to clean commit history to get rid of large files (simply deleting then re-commit is not enough)
+        git filter-branch --force --index-filter 'for file in test/complete-5000.txt test/components-50000.txt test/random-50000.txt test/sparse-500000.txt; do git rm --cached --ignore-unmatch $file; done' --prune-empty --tag-name-filter cat -- --all
+    - Follow previous command by
+        git push origin --force --all
+
