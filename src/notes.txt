@@ -15,3 +15,6 @@ Implementing Sequential Algo
             - "./main -seq -f test/sparse-50000.txt"
 - generating test cases
     - Test #3 cannot finish running
+- pushing to Github
+    - test files cannot be uploaded because they exceed size limit
+    - could look into Git Large File Storage - https://git-lfs.github.com
