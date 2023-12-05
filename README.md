@@ -3,5 +3,6 @@
 
 ## URLs
 [Project Proposal URL](https://lexinch.github.io/15418finalproject/proposal/proposal.html)
+
 [Project Milestone URL](https://lexinch.github.io/15418finalproject/milestone/milestone.html)
 
