@@ -8,7 +8,8 @@ Implementing Sequential Algo
 - testing works
     - need to compile seq_mis.cpp as well, not just main.cpp 
     - Testing commands (You can test locally with these as well):
-        - "g++ -std=c++14 -o main src/main.cpp src/seq_mis.cpp src/luby_mis.cpp src/luby.mpi.cpp"
+        - "g++ -std=c++14 -o main src/main.cpp src/seq_mis.cpp src/luby_mis.cpp src/luby_mpi.cpp src/rand_priority_mis.cpp"
+        - "mpic++ -std=c++14 -o main src/main.cpp src/seq_mis.cpp src/luby_mis.cpp src/luby_mpi.cpp src/rand_priority_mis.cpp"
         - "./main -seq (-f filename)" run under src
             - "./main -seq"
             - "./main -seq -f ../random-5000.txt"

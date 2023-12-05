@@ -11,7 +11,7 @@
 
 
 // implementation versions
-enum class MISType { Sequential, LubyOpenMP};
+enum class MISType { Sequential, LubyOpenMP, RandPrio};
 
 struct StartupOptions {
     std::string inputFile = "";
@@ -27,6 +27,8 @@ StartupOptions parseOptions(int argc, const char **argv) {
             so.type = MISType::Sequential;
         } else if (strcmp(argv[i], "-lubyopenmp") == 0) {
             so.type = MISType::LubyOpenMP;
+        } else if (strcmp(argv[i], "-randprio") == 0) {
+            so.type = MISType::RandPrio;
         }
         // else if (strcmp(argv[i], "-openmp") == 0) {
         //     so.type = MISType::OpenMP;
@@ -142,13 +144,17 @@ int main(int argc, const char **argv) {
     }
 
     std::unique_ptr<Graph> g;
-
+    std::cout << "111111111\n";
     switch (options.type) {
         case MISType::Sequential:
             g = createSeqGraph();
             break;
         case MISType::LubyOpenMP:
             g = createLubyGraph();
+            break;
+        case MISType::RandPrio:
+            std::cout << "222222222\n";
+            g = createRandPrioGraph();
             break;
         // case MISType::OpenMP:
         //     cg = createOpenMPColorGraph();
@@ -161,16 +167,19 @@ int main(int argc, const char **argv) {
         //     break;
 
     }
-
+    std::cout << "33333333\n";
     std::unordered_map<vertex, std::vector<vertex>> orig_graph;
     std::unordered_map<vertex, std::vector<vertex>> temp_graph;
     std::unordered_set<vertex> indSet;
     g->buildGraph(vertices, edges, orig_graph);
+    std::cout << "44444444\n";
 
     Timer t;
     g->buildGraph(vertices, edges, temp_graph);
+    std::cout << "5555555\n";
     t.reset();
     g->buildIndSet(temp_graph, indSet);
+    std::cout << "66666666\n";
 
     double time_spent = t.elapsed();
     std::cout.setf(std::ios::fixed, std::ios::floatfield);
