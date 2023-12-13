@@ -32,9 +32,9 @@ public:
 
         // Create a copy of graph with sets
         std::unordered_map<vertex, std::unordered_set<vertex>> check_graph;
-        for (const vertex &v : graph) {
-            std::unordered_set<vertex> adj_list(graph[v].begin(), graph[v].end());
-            check_graph[v] = adj_list;
+        for (const auto &v : graph) {
+            std::unordered_set<vertex> adj_list(graph[v.first].begin(), graph[v.first].end());
+            check_graph[v.first] = adj_list;
         }
 
         // Initialize MPI
@@ -44,20 +44,26 @@ public:
         // Get total number of processes specificed at start of run
         MPI_Comm_size(MPI_COMM_WORLD, &nproc);
         
+        std::cout << "MPI rank: " << pid << std::endl;
+        std::cout << "MPI size: " << nproc << std::endl;
         Ind = {};
         Ind.clear(); // Clear the independent set
         std::cout << graph.size() << std::endl;
 
         // Calculate range of vertices in subgraph
         std::vector<int> count(nproc);
+        std::cout << count[0] << std::endl;
         int remainder = graph.size() % nproc;
+        std::cout << "remainder: " << remainder << std::endl;
         for (int j = 0; j < nproc; j++) {
             count[j] = graph.size() / nproc;
             if (remainder > 0) {
                 count[j]++;
                 remainder--;
             }
+            std::cout << "iter: " << j << std::endl;
         }
+        std::cout << "63" << std::endl;
         std::vector<int> displs(nproc);
         displs[0] = 0;
         for (int j = 1; j < nproc; j++) {
@@ -71,6 +77,8 @@ public:
         for (vertex v = start_vertex; v < end_vertex; v++) {
             sub_g[v] = graph[v];
         }
+
+        std::cout << "76" << std::endl;
 
         // Run Luby's algorithm on each subgraph
         while (!sub_g.empty()) {
@@ -114,7 +122,7 @@ public:
         // Gather subgraphs
         // Count subgraph size
         std::vector<vertex> sub_ind(Ind.begin(), Ind.end());
-
+        std::cout << "117" << std::endl;
         // Gather the size of indset found in each subgraph
         int indset_size = sub_ind.size();
         std::vector<int> recvbuf(nproc);
@@ -125,7 +133,9 @@ public:
             indset_count[i] = 1;
             displs_count[i] = i;
         }
+        std::cout << "128" << std::endl;
         MPI_Allgatherv(&indset_size, 1, MPI_INT, recvbuf.data(), indset_count.data(), displs.data(), MPI_INT, MPI_COMM_WORLD);
+        std::cout << "138" << std::endl;
 
         // Gather the subgraphs
         std::vector<vertex> gathered_list;
@@ -134,8 +144,10 @@ public:
         for (int i = 1; i < nproc; i++) {
             total_displs[i] = recvbuf[i - 1] + total_displs[i - 1];
         }
+        std::cout << "147" << std::endl;
+        gathered_list.resize(total_displs[nproc - 1] + recvbuf[nproc - 1] + 1);
         MPI_Gatherv(sub_ind.data(), sub_ind.size(), MPI_INT, gathered_list.data(), recvbuf.data(), total_displs.data(), MPI_INT, 0, MPI_COMM_WORLD);
-
+        std::cout << "149" << std::endl;
         // Run Luby's algorithm on the gathered graph
         // Parallelize the removal of vertices based on degree comparison
         std::unordered_set<int> S_all(gathered_list.begin(), gathered_list.end());
@@ -150,7 +162,7 @@ public:
 
         // Remove S_all and neighbor(S_all) from check_graph
         // Insert to Ind_all
-        Ind_all = {};
+        std::unordered_set<vertex> Ind_all;
         Ind_all.clear(); // Clear the independent set
         for (const vertex &v : S_all) {
             Ind_all.insert(v);
@@ -204,6 +216,6 @@ public:
     }
 };
 
-std::unique_ptr<Graph> createLubyGraph() {
-    return std::make_unique<LubyGraph>();
+std::unique_ptr<Graph> createLubyMPIGraph() {
+    return std::make_unique<LubyMPIGraph>();
 }

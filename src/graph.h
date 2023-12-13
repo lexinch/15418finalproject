@@ -20,4 +20,5 @@ class Graph {
 
 std::unique_ptr<Graph> createSeqGraph();
 std::unique_ptr<Graph> createLubyGraph();
+std::unique_ptr<Graph> createLubyMPIGraph();
 std::unique_ptr<Graph> createRandPrioGraph();

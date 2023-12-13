@@ -11,7 +11,7 @@
 
 
 // implementation versions
-enum class MISType { Sequential, LubyOpenMP, RandPrio};
+enum class MISType { Sequential, LubyOpenMP, LubyMPI, RandPrio};
 
 struct StartupOptions {
     std::string inputFile = "";
@@ -27,6 +27,8 @@ StartupOptions parseOptions(int argc, const char **argv) {
             so.type = MISType::Sequential;
         } else if (strcmp(argv[i], "-lubyopenmp") == 0) {
             so.type = MISType::LubyOpenMP;
+        } else if (strcmp(argv[i], "-lubympi") == 0) {
+            so.type = MISType::LubyMPI;
         } else if (strcmp(argv[i], "-randprio") == 0) {
             so.type = MISType::RandPrio;
         }
@@ -155,6 +157,9 @@ int main(int argc, const char **argv) {
         case MISType::RandPrio:
             std::cout << "222222222\n";
             g = createRandPrioGraph();
+            break;
+        case MISType::LubyMPI:
+            g = createLubyMPIGraph();
             break;
         // case MISType::OpenMP:
         //     cg = createOpenMPColorGraph();
