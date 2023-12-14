@@ -1,5 +1,6 @@
 #include "graph.h"
 #include "timing.h"
+#include "omp.h"
 
 #include <algorithm>
 #include <cstring>
@@ -134,6 +135,20 @@ void createCompleteTest(std::vector<vertex> &vertices,
 }
 
 int main(int argc, const char **argv) {
+
+    const char* numThreads = std::getenv("OMP_NUM_THREADS");
+    
+    if (numThreads) {
+        std::cout << "OMP_NUM_THREADS is set to: " << numThreads << std::endl;
+    } else {
+        std::cout << "OMP_NUM_THREADS is not set." << std::endl;
+    }
+
+    // #pragma omp single
+    // {
+    //     std::cout << "Number of threads: " << omp_get_num_threads() << std::endl;
+    // }
+
     StartupOptions options = parseOptions(argc, argv);
 
     std::vector<vertex> vertices;
