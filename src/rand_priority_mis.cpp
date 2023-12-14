@@ -27,61 +27,67 @@ public:
         }
     }
 
-    int buildIndSet(std::unordered_map<vertex, std::vector<vertex>> &graph,
-                    std::unordered_set<vertex> &Ind) {
+    int buildIndSet(std::unordered_map<vertex, std::vector<vertex>>& graph,
+                    std::unordered_set<vertex>& Ind) {
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_real_distribution<> dis(0, 1);
 
         // Assign a random number to each vertex
         std::unordered_map<vertex, double> random_numbers;
-        for (const auto &v : graph) {
+        for (const auto& v : graph) {
             random_numbers[v.first] = dis(gen);
         }
-        std::cout << "aaaaaaa\n";
 
         Ind.clear(); // Clear the independent set
 
-        std::cout << "bbbbbbb\n";
         while (!graph.empty()) {
             std::unordered_set<vertex> to_be_removed;
             std::unordered_set<vertex> next_graph_vertices;
 
+            // Copy keys of the map into a vector
+            std::vector<vertex> graphKeys;
+            for (const auto& kv : graph) {
+                graphKeys.push_back(kv.first);
+            }
+
             // Parallelize the loop with OpenMP
-            // #pragma omp parallel
-            // {
+            #pragma omp parallel
+            {
                 std::unordered_set<vertex> local_remove;
                 std::unordered_set<vertex> local_ind;
 
-                // #pragma omp for nowait
-                for (auto it = graph.begin(); it != graph.end(); ++it) {
+                #pragma omp for nowait
+                for (size_t i = 0; i < graphKeys.size(); ++i) {
+                    vertex v = graphKeys[i];
                     bool is_smallest = true;
-                    vertex v = it->first;
+
                     // Check if current node has the smallest random number among its neighbors
-                    for (const vertex &neighbor : it->second) {
+                    for (const vertex& neighbor : graph[v]) {
                         if (random_numbers[v] > random_numbers[neighbor]) {
                             is_smallest = false;
                             break;
                         }
                     }
+
                     // If v has the smallest number, it joins the local independent set
                     if (is_smallest) {
                         local_ind.insert(v);
                         // Schedule neighbors for removal in the local set
-                        for (const vertex &neighbor : it->second) {
+                        for (const vertex& neighbor : graph[v]) {
                             local_remove.insert(neighbor);
                         }
                     }
                 }
 
                 // Merge local sets into the shared ones
-                // #pragma omp critical
-                // {
+                #pragma omp critical
+                {
                     Ind.insert(local_ind.begin(), local_ind.end());
                     to_be_removed.insert(local_remove.begin(), local_remove.end());
-                // }
-            // }
-
+                }
+            }
+            
             // After determining the nodes to be removed, we will rebuild the graph
             // for the next iteration without the removed nodes and their neighbors.
             for (auto &kv : graph) {
@@ -107,18 +113,18 @@ public:
             }
 
             // weirdly detects error?? but outcome correct
-            // if (to_be_removed.empty()) {
-            //     // If no vertices were scheduled to be removed, the algorithm is stuck.
-            //     // This should not happen if the algorithm is correct.
-            //     std::cout << "Graph size before getting stuck: " << graph.size() << std::endl;
-            //     std::cerr << "Error: No vertices were removed in the iteration. The algorithm is stuck." << std::endl;
-            //     return -1;  // Indicate an error
-            // }
+            if (to_be_removed.empty()) {
+                // If no vertices were scheduled to be removed, the algorithm is stuck.
+                // This should not happen if the algorithm is correct.
+                std::cout << "Graph size before getting stuck: " << graph.size() << std::endl;
+                std::cerr << "Error: No vertices were removed in the iteration. The algorithm is stuck." << std::endl;
+                return 0;  // Indicate an error
+            }
         }
-        std::cout << "ffffffffff\n";
 
         return 0; // return 0 to indicate success.
     }
+
 };
 
 std::unique_ptr<Graph> createRandPrioGraph() {
