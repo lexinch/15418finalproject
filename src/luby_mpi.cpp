@@ -8,11 +8,11 @@
 
 class LubyMPIGraph : public Graph {
 public:
-    void buildGraph(std::vector<vertex> &vertices, 
+    void buildGraph(std::vector<vertex> &vertices,
                     std::vector<std::pair<int, int>> &edges,
                     std::unordered_map<vertex, std::vector<vertex>> &graph) {
-        
-        // initialize Neighbors in G for each v 
+
+        // initialize Neighbors in G for each v
         for (auto &vertex : vertices) {
             graph[vertex] = {};
         }
@@ -26,7 +26,7 @@ public:
 
     int buildIndSet(std::unordered_map<vertex, std::vector<vertex>> &graph,
                     std::unordered_set<vertex> &Ind) {
-        
+
         int pid;
         int nproc;
 
@@ -43,7 +43,7 @@ public:
         MPI_Comm_rank(MPI_COMM_WORLD, &pid);
         // Get total number of processes specificed at start of run
         MPI_Comm_size(MPI_COMM_WORLD, &nproc);
-        
+
         std::cout << "MPI rank: " << pid << std::endl;
         std::cout << "MPI size: " << nproc << std::endl;
         Ind = {};
@@ -96,8 +96,8 @@ public:
             // Parallelize the removal of vertices based on degree comparison
             for (const vertex &v : S) {
                 for (const vertex &u : sub_g[v]) {
-                    if (sub_g.find(u) != sub_g.end() && 
-                        S.find(u) != S.end() && 
+                    if (sub_g.find(u) != sub_g.end() &&
+                        S.find(u) != S.end() &&
                         sub_g[u].size() <= sub_g[v].size()) {
                         S.erase(u);
                     }
@@ -153,7 +153,7 @@ public:
         std::unordered_set<int> S_all(gathered_list.begin(), gathered_list.end());
         for (const vertex &v : S_all) {
             for (const vertex &u : S_all) {
-                if (check_graph[v].find(u) != check_graph[v].end() &&  
+                if (check_graph[v].find(u) != check_graph[v].end() &&
                     check_graph[u].size() <= check_graph[v].size()) {
                     S_all.erase(u);
                 }
@@ -190,8 +190,8 @@ public:
             // Parallelize the removal of vertices based on degree comparison
             for (const vertex &v : S) {
                 for (const vertex &u : check_graph[v]) {
-                    if (check_graph.find(u) != check_graph.end() && 
-                        S.find(u) != S.end() && 
+                    if (check_graph.find(u) != check_graph.end() &&
+                        S.find(u) != S.end() &&
                         check_graph[u].size() <= check_graph[v].size()) {
                         S.erase(u);
                     }
