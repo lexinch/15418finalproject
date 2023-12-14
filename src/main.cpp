@@ -25,14 +25,19 @@ StartupOptions parseOptions(int argc, const char **argv) {
         if (strcmp(argv[i], "-f") == 0) {
             so.inputFile = argv[i+1];
         } else if (strcmp(argv[i], "-seq") == 0) {
+            std::cout << "Running sequential version" << std::endl;
             so.type = MISType::Sequential;
         } else if (strcmp(argv[i], "-lubyopenmp") == 0) {
+            std::cout << "Running OpenMP parallel for version for Luby's" << std::endl;
             so.type = MISType::LubyOpenMP;
         } else if (strcmp(argv[i], "-lubympi") == 0) {
+            std::cout << "Running OpenMPI version for Luby's" << std::endl;
             so.type = MISType::LubyMPI;
         } else if (strcmp(argv[i], "-randprio") == 0) {
+            std::cout << "Running OpenMP random priority algo" << std::endl;
             so.type = MISType::RandPrio;
         } else if (strcmp(argv[i], "-lubytask") == 0) {
+            std::cout << "Running OpenMP task version for Luby's" << std::endl;
             so.type = MISType::LubyTask;
         }
     }
@@ -139,10 +144,14 @@ int main(int argc, const char **argv) {
         std::cout << "OMP_NUM_THREADS is not set." << std::endl;
     }
 
-    #pragma omp single
+    #pragma omp parallel
     {
-        std::cout << "Number of threads: " << omp_get_num_threads() << std::endl;
+        #pragma omp single
+        {
+            std::cout << "Number of threads in the parallel region: " << omp_get_num_threads() << std::endl;
+        }
     }
+
 
     StartupOptions options = parseOptions(argc, argv);
 
