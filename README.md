@@ -6,11 +6,17 @@
 
 [Project Milestone URL](https://lexinch.github.io/15418finalproject/milestone/milestone.html)
 
+[Project Final Report URL](https://docs.google.com/document/d/1yRcRD2ahBrTF_eNbuy1lZ05uuSNCfnLLmSuDRfu0Q-c/edit?usp=sharing)
+
 ## Instructions to compile and run the code
 To build the project, run:
-```make```
+```
+make
+```
 To clean the build (remove the missolver executable), run:
-```make clean```
+```
+make clean
+```
 To run the executable with different flags, you can execute commands like:
 ```
 # Generate test cases
